@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Movie.css';
 
 class Movie extends Component{ //클래스 생성(컴포넌트) 
+
+    static propTypes = {//부모 컴포넌트에서 얻는 데이터타입 알수 있음.
+        title: PropTypes.string.isRequired,
+        poster: PropTypes.string.isRequired
+    }
+
+
     render(){ //컴포넌트는 무조건 render!
         /*부모 app comp로부터 title정보 얻기위해서
         props 사용!! */
@@ -21,6 +29,11 @@ class Movie extends Component{ //클래스 생성(컴포넌트)
 }
 
 class MoviePoster extends Component{
+
+    static propTypes = {//부모 컴포넌트에서 얻는 데이터타입 알수 있음.
+        poster: PropTypes.string.isRequired
+    }
+
     render(){
         return(
             <img src={this.props.poster}/>
