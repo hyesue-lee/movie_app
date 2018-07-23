@@ -3,25 +3,7 @@ import './App.css';
 import Movie from './Movie';
 
 
-const movies = [ // arrays.
-  {
-    title:"Before Sunrise",
-    poster: "https://upload.wikimedia.org/wikipedia/en/d/da/Before_Sunrise_poster.jpg"
 
-  },
-  { 
-    title:"Head on",
-    poster: "https://media2.fdncms.com/chicago/imager/head-on/u/zoom/5723772/head_on.jpg"
-
-  },
-  { title:"Midnight in Paris",
-  poster: "https://images-na.ssl-images-amazon.com/images/I/710PQRUAl-L._SY445_.jpg",
-
-},
-{ title:"Shape of water",
-    poster: "https://cdn-images-1.medium.com/max/1382/1*NZhRKM4xvz27VLl5vJ73Sg.jpeg",
-
-  }]
 
 /*이영화들의 제목을 자식 컴포넌트인 movie컴포넌트로 보내고싶다면
 부모 comp: <Movie title={movies[0]}/> : 자식에게 제목보냄.
@@ -30,24 +12,50 @@ const movies = [ // arrays.
 
 class App extends Component { // Component called App  
 
+  // Render: componentWillMount() -> render() -> componentDidMount()
 
-  componentWillMount(){
+  //Update componentWillReceiveProps -> shouldComponentUpdate() -> render() -> component
+
+// React LifeCycles.
+  componentWillMount(){ // 1. Will mount 
     console.log('will mount')
   }
-  componentDidMount(){
-    console.log('did mount')
-  }
-  
 
+  componentDidMount(){
+    this._getMovies();
+  }
+
+  _renderMovies = () =>  { // 기능직접생성.
+    const movies = this.state.movies.map(movie => {
+      console.log(movie)
+    return <Movie title = {movie.title} poster = {movie.large_cover_image} key={movie.id} />
+  })
+  return movies
+} 
+
+_getMovies = async () =>{
+  const movies = await this._callApi()
+  this.setState({
+    movies
+  })
+}
+
+_callApi = () => {
+  return fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating')
+  .then(response => response.json())
+  .then(json => json.data.movies)
+  .catch(err => console.log(err)) // 이러나면 캐치로 잡음.
+}
+state = {
+
+}
 
   render() {//출력기능 
-    console.log('did render')
+    console.log('did render') // 2. render
       return( 
         //현재 movies는 array임. array에다가 map기능통해 새로운 array만든다.  
       <div className="App">
-        {movies.map((movie, index) => {
-          return <Movie title = {movie.title} poster = {movie.poster} key={index} />
-        })} 
+       {this.state.movies ? this._renderMovies() : 'Loading'}
       </div>
     
       );
