@@ -28,19 +28,25 @@ class App extends Component { // Component called App
   _renderMovies = () =>  { // 기능직접생성.
     const movies = this.state.movies.map(movie => {
       console.log(movie)
-    return <Movie title = {movie.title} poster = {movie.large_cover_image} key={movie.id} />
+    return <Movie 
+            title = {movie.title_english} 
+            poster = {movie.medium_cover_image} 
+            key={movie.id} 
+            genres = {movie.genres}
+            synopsis={movie.synopsis}
+            />
   })
   return movies
 } 
 
-_getMovies = async () =>{
+_getMovies = async () =>{ // 가지고온 데이터 state에 셋팅.. 
   const movies = await this._callApi()
   this.setState({
     movies
   })
 }
 
-_callApi = () => {
+_callApi = () => { // json 사용하여 무비 api 로부터 데이터 가져옴..
   return fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating')
   .then(response => response.json())
   .then(json => json.data.movies)
