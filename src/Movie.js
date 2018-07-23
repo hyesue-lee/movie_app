@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Movie.css';
+import LinesEllipsis from 'react-lines-ellipsis';
 /*
 class Movie extends Component{ //클래스 생성(컴포넌트) 
 
@@ -44,22 +45,39 @@ class MoviePoster extends Component{
 }
 */
 function Movie ({title, poster, genres, synopsis}){
+
     return(
-        <div className="Movie">
-            <div className="Movie__Col">
-            <MoviePoster poster={poster} alt={title}/>
-            </div>
-            <div className="Movie__Col">
-                <h1>{title}</h1>
-                <div className="Movie__Genre">
-                    {genres.map((genre,index) => <MovieGenre genre={genre} key={index} />)}
+        
+        <div className="background">
+  
+            <div className="Movie">
+                <div className="Movie__Col">
+                <MoviePoster poster={poster} alt={title}/>
                 </div>
-                <p className="Movie__Synopsis">
-                    {synopsis}
-                </p>
+                <div className="Movie__Col">
+                    <h1>{title}</h1>
+                    
+                    <div className="Movie__Genre">
+                        <h className="__Text">Genres     </h>
+                        {genres.map((genre,index) => <MovieGenre genre={genre} key={index} />)}
+                    </div>
+
+                    <div className="synopsis__box">
+                    <p className="Movie__Synopsis">
+                    <h className="__Text">Synopsis    </h>
+                         <LinesEllipsis
+                            text = {synopsis}
+                            maxLine='5'
+                            ellipsis=' ... '
+                            trimRight
+                            basedOn='letters'
+                            />
+                    </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    )
+      </div>
+    )  
 }
 
 function MovieGenre({genre}){
