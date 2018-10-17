@@ -1,4 +1,4 @@
-https://hyesue-lee.github.io/movie_app/
+사이트 바로가기 >> https://hyesue-lee.github.io/movie_app/
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
